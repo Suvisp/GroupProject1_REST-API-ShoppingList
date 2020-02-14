@@ -26,7 +26,6 @@ function yliviivaus() {
 
 //poistaa yhden listaelementin sekä clientti- että palvelinpäästä
 function poista() {
-    //kaikki tämä regex-hulluus johtuu siitä, että listaelementin sisältöön kuuluu muutakin, kuin ostoksen nimi. älä kysy. -otto
     let nappi = this;
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
@@ -39,7 +38,6 @@ function poista() {
 
     // luodaan DELETE -fetch-pyyntö. 
     fetch("http://localhost:3000/api/users/", {
-        //pitääkö olla await???? -otto
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
@@ -215,7 +213,7 @@ function lisääListalle(ostos) {
     nappimuokkaa.addEventListener("click", muokkaa);
     nappiravinto.addEventListener("click", haeRavinteetListasta);
 
-    //annetaan napeille vielä id:t -otto
+    //annetaan napeille vielä id:t
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
@@ -261,7 +259,7 @@ function haeKuvaListasta(event) {
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
 }
-
+//haetaan ravinteet hakusanalla
 function haeRavinteet() {
 
     fetch("http://localhost:3000/api/ravinteet/" + hakusana.value) //lähettää hakusanalla pyynnön palvelimelle
@@ -270,11 +268,11 @@ function haeRavinteet() {
             JSON.stringify(data) //muuttaa Javascript olioksi
             console.log(data)
             otsikko.innerHTML = "Ravintosisältö / 100g"
-      
+
             for (let i = 0; i < 3; i++) { //luuppaa läpi kolme ensimmäistä hakutulosta
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt:
                 const uusili = document.createElement('ul');
-                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/1000).toFixed(2)} g </li>`;
+                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt) / 1000).toFixed(2)} g </li>`;
                 //Edelline pyöristää luvut kahteen desimaaliin ja muuttaa suolan mg-->g
                 document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
@@ -306,6 +304,7 @@ function haeRavinteetListasta() {
             }
         })
 }
+//hakee äänet, lukee ääneen ostoslistan läpi
 function haeAanet() {
 
     let ostostaulukko = []
@@ -316,13 +315,14 @@ function haeAanet() {
             for (let i = 0; i < data.length; i++) { //looppaa datan läpi
                 let sanat = data[i].hakusana
                 ostostaulukko.push(sanat) //lisää ostostaulukkoon ostoslistan tuotteiden nimet
-            console.log(sanat)
+                console.log(sanat)
 
-    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src=" //voice rss api-osoite
-       
-        document.getElementById("aani").src = osoite + ostostaulukko
-        console.log(osoite)
-    } })
+                let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src=" //voice rss api-osoite
+
+                document.getElementById("aani").src = osoite + ostostaulukko
+                console.log(osoite)
+            }
+        })
 }
 
 function tyhjennaLista() {
@@ -356,7 +356,7 @@ function tyhjennaLista() {
     otsikko.innerHTML = "";
     lista.innerHTML = "";
     ravinteetdiv.innerHTML = "";
-}
+}   
 
 
 

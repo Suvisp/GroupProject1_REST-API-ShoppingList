@@ -7,7 +7,7 @@ var fs = require('fs');
 router.route('/').get(function (req, res, next) { 
     let informaatiot = fs.readFileSync("ostokset.json"); //hakee tiedot ostokset.json tiedostosta
     console.log(JSON.parse(informaatiot));
-    ostoslista = JSON.parse(informaatiot); //muuttaa js olioksi
+    ostoslista = JSON.parse(informaatiot); //muuttaa Javascript olioksi
     //  tämä palauttaa olemassa olevan ostoslistan takaisin clientille
     res.send(informaatiot);
 })

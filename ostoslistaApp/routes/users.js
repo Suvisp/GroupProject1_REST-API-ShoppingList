@@ -10,7 +10,7 @@ router.route('/').get(function (req, res, next) {
   let informaatiot = fs.readFileSync("ostokset.json");
   console.log(JSON.parse(informaatiot));
   ostoslista = JSON.parse(informaatiot);
-  //  tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa - jaska
+  //  tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa
   res.send(informaatiot);
 
 
@@ -62,23 +62,11 @@ router.route('/:hakusana').get(function (req, res) {
       //muuttaa jsoniksi
       return fetchres.json()
     })
-    //lähettää kuvan localhostille selaimelle
+    //lähettää kuvan selaimelle
     .then(function (data) {
       // console.log(data)
       res.json(data)
     })})
-    // .get(function (req, res) {
-    //   const haku = req.params.hakusana
-    //   fetch("https://fineli.fi/fineli/api/v1/foods?q=" + haku)
-    //     .then(function (fetchres) {
-    //       // console.log(fetchres)
-    //       //muuttaa jsoniksi
-    //       return fetchres.json()
-    //     })
-    //     //lähettää kuvan localhostille selaimelle
-    //     .then(function (data) {
-    //       // console.log(data)
-    //       res.json(data)
-    //     })
+ 
 
 module.exports = router;
